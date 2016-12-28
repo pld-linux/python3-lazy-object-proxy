@@ -8,7 +8,7 @@
 Summary:	A fast and thorough lazy object proxy
 Name:		python-%{module}
 Version:	1.2.1
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/l/lazy-object-proxy/%{module}-%{version}.tar.gz
