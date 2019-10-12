@@ -7,12 +7,12 @@
 %define 	module	lazy-object-proxy
 Summary:	A fast and thorough lazy object proxy
 Name:		python-%{module}
-Version:	1.2.1
-Release:	3
+Version:	1.4.1
+Release:	1
 License:	BSD
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/l/lazy-object-proxy/%{module}-%{version}.tar.gz
-# Source0-md5:	ad33e3e06d24786f708b72cc23350afa
+# Source0-md5:	0a904e9b6112c1337f404811e10cb53e
 URL:		https://github.com/ionelmc/python-lazy-object-proxy
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -70,16 +70,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %if %{with python2}
 %py_install
-
 %py_postclean
-
-rm $RPM_BUILD_ROOT/%{py_sitedir}/lazy_object_proxy/*.c
 %endif
 
 %if %{with python3}
 %py3_install
-
-rm $RPM_BUILD_ROOT/%{py3_sitedir}/lazy_object_proxy/*.c
 %endif
 
 %clean
