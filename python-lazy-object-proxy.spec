@@ -1,53 +1,68 @@
 #
 # Conditional build:
-%bcond_with	doc	# don't build doc
+%bcond_without	doc	# Sphinx documentation
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
 
 %define 	module	lazy-object-proxy
 Summary:	A fast and thorough lazy object proxy
+Summary(pl.UTF-8):	Szybkie i gruntowne leniwe proxy obiektów
 Name:		python-%{module}
-Version:	1.4.1
+Version:	1.4.2
 Release:	1
 License:	BSD
 Group:		Libraries/Python
-Source0:	https://pypi.python.org/packages/source/l/lazy-object-proxy/%{module}-%{version}.tar.gz
-# Source0-md5:	0a904e9b6112c1337f404811e10cb53e
+#Source0Download: https://pypi.org/simple/lazy-object-proxy/
+Source0:	https://files.pythonhosted.org/packages/source/l/lazy-object-proxy/%{module}-%{version}.tar.gz
+# Source0-md5:	5890e9b922f9b76e85edf1f7239fdab5
 URL:		https://github.com/ionelmc/python-lazy-object-proxy
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with python2}
-BuildRequires:	python-devel
-BuildRequires:	python-setuptools
+BuildRequires:	python-devel >= 1:2.7
+BuildRequires:	python-setuptools >= 30.3.0
+BuildRequires:	python-setuptools_scm >= 3.3.1
 %endif
 %if %{with python3}
-BuildRequires:	python3-devel
-BuildRequires:	python3-setuptools
+BuildRequires:	python3-devel >= 1:3.4
+BuildRequires:	python3-setuptools >= 30.3.0
+BuildRequires:	python3-setuptools_scm >= 3.3.1
 %endif
-Requires:	python-modules
+%if %{with doc}
+BuildRequires:	python3-sphinx_py3doc_enhanced_theme
+BuildRequires:	sphinx-pdg-3 >= 1.3
+%endif
+Requires:	python-modules >= 1:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 A fast and thorough lazy object proxy.
 
+%description -l pl.UTF-8
+Szybkie i gruntowne leniwe proxy obiektów.
+
 %package -n python3-%{module}
 Summary:	A fast and thorough lazy object proxy
+Summary(pl.UTF-8):	Szybkie i gruntowne leniwe proxy obiektów
 Group:		Libraries/Python
-Requires:	python3-modules
+Requires:	python3-modules >= 1:3.4
 
 %description -n python3-%{module}
 A fast and thorough lazy object proxy.
 
+%description -n python3-%{module} -l pl.UTF-8
+Szybkie i gruntowne leniwe proxy obiektów.
+
 %package apidocs
-Summary:	%{module} API documentation
-Summary(pl.UTF-8):	Dokumentacja API %{module}
+Summary:	API documentation for lazy_object_proxy module
+Summary(pl.UTF-8):	Dokumentacja API modułu lazy_object_proxy
 Group:		Documentation
 
 %description apidocs
-API documentation for %{module}.
+API documentation for lazy_object_proxy module.
 
 %description apidocs -l pl.UTF-8
-Dokumentacja API %{module}.
+Dokumentacja API modułu lazy_object_proxy.
 
 %prep
 %setup -q -n %{module}-%{version}
@@ -62,7 +77,7 @@ Dokumentacja API %{module}.
 %endif
 
 %if %{with doc}
-sphinx-build -b html docs dist/docs
+sphinx-build-3 -b html docs docs/_build
 %endif
 
 %install
@@ -70,6 +85,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %if %{with python2}
 %py_install
+
 %py_postclean
 %endif
 
@@ -83,20 +99,20 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc *.rst
+%doc AUTHORS.rst CHANGELOG.rst LICENSE README.rst
 %dir %{py_sitedir}/lazy_object_proxy
 %{py_sitedir}/lazy_object_proxy/*.py[co]
-%attr(755,root,root) %{py_sitedir}/lazy_object_proxy/*.so
+%attr(755,root,root) %{py_sitedir}/lazy_object_proxy/cext.so
 %{py_sitedir}/lazy_object_proxy-%{version}-py*.egg-info
 %endif
 
 %if %{with python3}
 %files -n python3-%{module}
 %defattr(644,root,root,755)
-%doc *.rst
+%doc AUTHORS.rst CHANGELOG.rst LICENSE README.rst
 %dir %{py3_sitedir}/lazy_object_proxy
 %{py3_sitedir}/lazy_object_proxy/*.py
-%attr(755,root,root) %{py3_sitedir}/lazy_object_proxy/*.so
+%attr(755,root,root) %{py3_sitedir}/lazy_object_proxy/cext.cpython-*.so
 %{py3_sitedir}/lazy_object_proxy/__pycache__
 %{py3_sitedir}/lazy_object_proxy-%{version}-py*.egg-info
 %endif
@@ -104,5 +120,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with doc}
 %files apidocs
 %defattr(644,root,root,755)
-%doc dist/docs/html/*
+%doc docs/_build/{_static,*.html,*.js}
 %endif
