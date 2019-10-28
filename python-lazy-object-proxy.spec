@@ -9,7 +9,7 @@ Summary:	A fast and thorough lazy object proxy
 Summary(pl.UTF-8):	Szybkie i gruntowne leniwe proxy obiektów
 Name:		python-%{module}
 Version:	1.4.2
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/lazy-object-proxy/
