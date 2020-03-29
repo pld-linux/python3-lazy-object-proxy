@@ -8,13 +8,13 @@
 Summary:	A fast and thorough lazy object proxy
 Summary(pl.UTF-8):	Szybkie i gruntowne leniwe proxy obiektów
 Name:		python-%{module}
-Version:	1.4.2
-Release:	2
+Version:	1.4.3
+Release:	1
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/lazy-object-proxy/
 Source0:	https://files.pythonhosted.org/packages/source/l/lazy-object-proxy/%{module}-%{version}.tar.gz
-# Source0-md5:	5890e9b922f9b76e85edf1f7239fdab5
+# Source0-md5:	5c64c06affcd2a7c6ddc848af4280cca
 URL:		https://github.com/ionelmc/python-lazy-object-proxy
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
