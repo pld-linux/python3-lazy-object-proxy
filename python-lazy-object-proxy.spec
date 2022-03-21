@@ -8,13 +8,14 @@
 Summary:	A fast and thorough lazy object proxy
 Summary(pl.UTF-8):	Szybkie i gruntowne leniwe proxy obiektów
 Name:		python-%{module}
-Version:	1.4.3
-Release:	3
+# keep 1.6.x here for python2 support
+Version:	1.6.0
+Release:	1
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/lazy-object-proxy/
 Source0:	https://files.pythonhosted.org/packages/source/l/lazy-object-proxy/%{module}-%{version}.tar.gz
-# Source0-md5:	5c64c06affcd2a7c6ddc848af4280cca
+# Source0-md5:	0b99101615658aa711cb55c8db4930d5
 URL:		https://github.com/ionelmc/python-lazy-object-proxy
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -29,8 +30,8 @@ BuildRequires:	python3-setuptools >= 1:30.3.0
 BuildRequires:	python3-setuptools_scm >= 3.3.1
 %endif
 %if %{with doc}
-BuildRequires:	python3-sphinx_py3doc_enhanced_theme
-BuildRequires:	sphinx-pdg-3 >= 1.3
+BuildRequires:	python-sphinx_py3doc_enhanced_theme
+BuildRequires:	sphinx-pdg-2 >= 1.3
 %endif
 Requires:	python-modules >= 1:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -77,7 +78,7 @@ Dokumentacja API modułu lazy_object_proxy.
 %endif
 
 %if %{with doc}
-sphinx-build-3 -b html docs docs/_build
+sphinx-build-2 -b html docs docs/_build
 %endif
 
 %install
