@@ -10,7 +10,7 @@ Summary(pl.UTF-8):	Szybkie i gruntowne leniwe proxy obiektów
 Name:		python-%{module}
 # keep 1.6.x here for python2 support
 Version:	1.6.0
-Release:	3
+Release:	4
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/lazy-object-proxy/
