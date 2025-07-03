@@ -3,31 +3,34 @@
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit tests
 
-%define 	module	lazy-object-proxy
 Summary:	A fast and thorough lazy object proxy
 Summary(pl.UTF-8):	Szybkie i gruntowne leniwe proxy obiektów
-Name:		python3-%{module}
-Version:	1.7.1
-Release:	3
+Name:		python3-lazy-object-proxy
+Version:	1.11.0
+Release:	1
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/lazy-object-proxy/
-Source0:	https://files.pythonhosted.org/packages/source/l/lazy-object-proxy/%{module}-%{version}.tar.gz
-# Source0-md5:	53e3ebae55a1b2568bee8a977f48dc98
+Source0:	https://files.pythonhosted.org/packages/source/l/lazy-object-proxy/lazy_object_proxy-%{version}.tar.gz
+# Source0-md5:	0cac82f66458b23d6e5b0da11bce7663
 URL:		https://github.com/ionelmc/python-lazy-object-proxy
-BuildRequires:	python3-devel >= 1:3.6
-BuildRequires:	python3-setuptools >= 1:30.3.0
-BuildRequires:	python3-setuptools_scm >= 3.3.1
+BuildRequires:	python3-devel >= 1:3.9
+BuildRequires:	python3-setuptools >= 1:64
+BuildRequires:	python3-setuptools_scm >= 8
 %if %{with tests}
+#BuildRequires:	python3-django
+#BuildRequires:	python3-hunter
+BuildRequires:	python3-objproxies >= 0.9.4
 BuildRequires:	python3-pytest
+BuildRequires:	python3-pytest-benchmark
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with doc}
-BuildRequires:	python3-sphinx_py3doc_enhanced_theme
+BuildRequires:	python3-furo
 BuildRequires:	sphinx-pdg-3 >= 1.3
 %endif
-Requires:	python3-modules >= 1:3.6
+Requires:	python3-modules >= 1:3.9
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -48,7 +51,7 @@ API documentation for lazy_object_proxy module.
 Dokumentacja API modułu lazy_object_proxy.
 
 %prep
-%setup -q -n %{module}-%{version}
+%setup -q -n lazy_object_proxy-%{version}
 
 %build
 %py3_build
@@ -70,12 +73,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %py3_install
 
+%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/lazy_object_proxy/*.c
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS.rst CHANGELOG.rst LICENSE README.rst
+%doc AUTHORS.rst CHANGELOG.rst LICENSE README.rst SECURITY.md
 %dir %{py3_sitedir}/lazy_object_proxy
 %{py3_sitedir}/lazy_object_proxy/*.py
 %attr(755,root,root) %{py3_sitedir}/lazy_object_proxy/cext.cpython-*.so
